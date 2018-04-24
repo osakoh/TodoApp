@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<diV id="myDIV" class="header">
+
+    <h2 style="margin: 5px;">Todo List</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.text }}
+        <button class="addBtn">Add&nbsp;<i class="fas fa-plus"></i></button>
+    </form>
+
+</diV>
+
+<ul id="myUL">
+
+    {% for obj in queryset %}
+        {% if obj.done %}
+            <li class="checked"><a href="{% url 'undone' obj.id %}">{{ obj.text }}</a><a href="{% url 'delete' obj.id %}"><span class="close"><i class="fas fa-window-close"></i></span></a></li>
+        {% else %}
+            <li><a href="{% url 'done' obj.id %}">{{ obj.text }}</a><a href="{% url 'delete' obj.id %}"><span class="close"><i class="fas fa-window-close"></i></span></a></li>
+        {% endif %}
+{% endfor %}
+
+
+</ul>
+
+
+</body>
+</html>
